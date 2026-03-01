@@ -1,0 +1,9 @@
+version: "3"
+services:
+  mcp-midjourney:
+    platform: linux/amd64
+    container_name: "mcp-midjourney"
+    build: ./
+    image: "ghcr.io/acedatacloud/mcp-midjourney:${BUILD_NUMBER}"
+    ports:
+      - "8000:8000"

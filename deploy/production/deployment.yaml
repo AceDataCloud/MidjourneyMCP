@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: mcp-midjourney
-          image: ghcr.io/acedatacloud/mcp-midjourney:latest
+          image: ghcr.io/acedatacloud/mcp-midjourney:${TAG}
           ports:
             - containerPort: 8000
               protocol: TCP
