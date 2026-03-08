@@ -94,7 +94,12 @@ Or if using uv:
   "mcpServers": {
     "midjourney": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/mcp-midjourney", "mcp-midjourney"],
+      "args": [
+        "run",
+        "--directory",
+        "/path/to/mcp-midjourney",
+        "mcp-midjourney"
+      ],
       "env": {
         "ACEDATACLOUD_API_TOKEN": "your_api_token_here"
       }
@@ -162,47 +167,47 @@ Clients connect with their own Bearer token — the server extracts the token fr
 
 ### Image Generation
 
-| Tool | Description |
-|------|-------------|
-| `midjourney_imagine` | Generate images from a text prompt (creates 2x2 grid) |
-| `midjourney_transform` | Transform images (upscale, variation, zoom, pan) |
-| `midjourney_blend` | Blend multiple images together |
-| `midjourney_with_reference` | Generate using a reference image as inspiration |
+| Tool                        | Description                                           |
+| --------------------------- | ----------------------------------------------------- |
+| `midjourney_imagine`        | Generate images from a text prompt (creates 2x2 grid) |
+| `midjourney_transform`      | Transform images (upscale, variation, zoom, pan)      |
+| `midjourney_blend`          | Blend multiple images together                        |
+| `midjourney_with_reference` | Generate using a reference image as inspiration       |
 
 ### Image Editing
 
-| Tool | Description |
-|------|-------------|
-| `midjourney_edit` | Edit an existing image with text prompt |
+| Tool                  | Description                                      |
+| --------------------- | ------------------------------------------------ |
+| `midjourney_edit`     | Edit an existing image with text prompt          |
 | `midjourney_describe` | Get AI descriptions of an image (reverse prompt) |
 
 ### Video
 
-| Tool | Description |
-|------|-------------|
+| Tool                        | Description                                  |
+| --------------------------- | -------------------------------------------- |
 | `midjourney_generate_video` | Generate video from text and reference image |
-| `midjourney_extend_video` | Extend existing video to make it longer |
+| `midjourney_extend_video`   | Extend existing video to make it longer      |
 
 ### Utility
 
-| Tool | Description |
-|------|-------------|
+| Tool                   | Description                                   |
+| ---------------------- | --------------------------------------------- |
 | `midjourney_translate` | Translate Chinese text to English for prompts |
-| `midjourney_get_seed` | Get the seed value of a generated image |
+| `midjourney_get_seed`  | Get the seed value of a generated image       |
 
 ### Tasks
 
-| Tool | Description |
-|------|-------------|
-| `midjourney_get_task` | Query a single task status |
+| Tool                         | Description                  |
+| ---------------------------- | ---------------------------- |
+| `midjourney_get_task`        | Query a single task status   |
 | `midjourney_get_tasks_batch` | Query multiple tasks at once |
 
 ### Information
 
-| Tool | Description |
-|------|-------------|
-| `midjourney_list_actions` | List available API actions |
-| `midjourney_get_prompt_guide` | Get prompt writing guide |
+| Tool                                | Description                 |
+| ----------------------------------- | --------------------------- |
+| `midjourney_list_actions`           | List available API actions  |
+| `midjourney_get_prompt_guide`       | Get prompt writing guide    |
 | `midjourney_list_transform_actions` | List transformation actions |
 
 ## Usage Examples
@@ -245,23 +250,23 @@ Claude: I'll create a video from this image.
 
 ## Generation Modes
 
-| Mode | Description |
-|------|-------------|
-| `fast` | Recommended for most use cases (default) |
-| `turbo` | Faster generation, uses more credits |
-| `relax` | Slower generation, cheaper |
+| Mode    | Description                              |
+| ------- | ---------------------------------------- |
+| `fast`  | Recommended for most use cases (default) |
+| `turbo` | Faster generation, uses more credits     |
+| `relax` | Slower generation, cheaper               |
 
 ## Configuration
 
 ### Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `ACEDATACLOUD_API_TOKEN` | API token from AceDataCloud | **Required** |
-| `ACEDATACLOUD_API_BASE_URL` | API base URL | `https://api.acedata.cloud` |
-| `MIDJOURNEY_DEFAULT_MODE` | Default generation mode | `fast` |
-| `MIDJOURNEY_REQUEST_TIMEOUT` | Request timeout in seconds | `1800` |
-| `LOG_LEVEL` | Logging level | `INFO` |
+| Variable                     | Description                 | Default                     |
+| ---------------------------- | --------------------------- | --------------------------- |
+| `ACEDATACLOUD_API_TOKEN`     | API token from AceDataCloud | **Required**                |
+| `ACEDATACLOUD_API_BASE_URL`  | API base URL                | `https://api.acedata.cloud` |
+| `MIDJOURNEY_DEFAULT_MODE`    | Default generation mode     | `fast`                      |
+| `MIDJOURNEY_REQUEST_TIMEOUT` | Request timeout in seconds  | `1800`                      |
+| `LOG_LEVEL`                  | Logging level               | `INFO`                      |
 
 ### Command Line Options
 
