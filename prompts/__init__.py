@@ -73,6 +73,15 @@ When the user wants to generate images, choose the appropriate tool based on the
 2. Default mode is 'fast' (good balance of speed and credits)
 3. Use 'turbo' for faster results (more credits)
 4. Use 'relax' for slower, cheaper generation
+
+## Midjourney V8 (Alpha) Features:
+- **V8 is the latest model** - use `version='8'` for the newest capabilities
+- **HD Mode** (`hd=True`): Generates 2K resolution images. V8 only. Costs 4x credits.
+- **Quality 4** (`quality='4'`): Ultra-detail mode. V8 only. Costs 4x credits.
+- **HD + Q4 combined**: Maximum quality. Costs 16x credits.
+- **Style Reference** (`style_reference=True`): When prompt uses --sref. V8 premium feature, costs 4x.
+- **Moodboard** (`moodboard=True`): Blending multiple reference images. V8 premium feature, costs 4x.
+- V8 does NOT support --iw (image weight) parameter.
 """
 
 
@@ -119,6 +128,8 @@ def midjourney_workflow_examples() -> str:
 - Use aspect ratio parameter (--ar) for specific dimensions
 - Use --no parameter to exclude unwanted elements
 - For Chinese speakers, offer translation with `midjourney_translate`
+- For V8: use `version='8'` and consider `hd=True` for 2K, `quality='4'` for ultra detail
+- V8 premium features (sref, moodboard, HD, Q4) cost 4x credits each; HD+Q4 together cost 16x
 """
 
 
