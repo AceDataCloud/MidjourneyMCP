@@ -6,7 +6,7 @@ from pydantic import Field
 
 from core.client import client
 from core.server import mcp
-from core.types import DEFAULT_MODE, ImagineAction, MidjourneyMode
+from core.types import DEFAULT_MODE, ImagineAction, MidjourneyMode, MidjourneyVersion
 from core.utils import format_imagine_result
 
 
@@ -46,6 +46,36 @@ async def midjourney_imagine(
             description="Webhook callback URL for asynchronous notifications. When provided, the API will call this URL when the image is generated."
         ),
     ] = None,
+    version: Annotated[
+        MidjourneyVersion | None,
+        Field(
+            description="Midjourney model version to use. '8' is the latest V8 Alpha with HD and ultra quality support. Leave unset to use Midjourney's default."
+        ),
+    ] = None,
+    hd: Annotated[
+        bool,
+        Field(
+            description="Enable HD mode (V8 only). Generates higher resolution images at 4x cost. Requires version='8'."
+        ),
+    ] = False,
+    quality: Annotated[
+        str | None,
+        Field(
+            description="Image quality level. For V8: '1' (standard) or '4' (ultra, 4x cost). For older versions: '.25', '.5', or '1'. HD + quality '4' = 16x cost."
+        ),
+    ] = None,
+    style_reference: Annotated[
+        bool,
+        Field(
+            description="Whether the prompt includes --sref style reference. In V8 this incurs 4x cost."
+        ),
+    ] = False,
+    moodboard: Annotated[
+        bool,
+        Field(
+            description="Whether using moodboard feature (V8 only, multiple reference images). Incurs 4x cost."
+        ),
+    ] = False,
 ) -> str:
     """Generate AI images from a text prompt using Midjourney.
 
@@ -62,15 +92,29 @@ async def midjourney_imagine(
     Returns:
         Task ID and generated image information including URLs, dimensions, and available actions.
     """
-    result = await client.imagine(
-        prompt=prompt,
-        mode=mode,
-        translation=translation,
-        split_images=split_images,
-        action="generate",
-        timeout=timeout,
-        callback_url=callback_url,
-    )
+    payload: dict = {
+        "prompt": prompt,
+        "mode": mode,
+        "translation": translation,
+        "split_images": split_images,
+        "action": "generate",
+    }
+    if timeout is not None:
+        payload["timeout"] = timeout
+    if callback_url is not None:
+        payload["callback_url"] = callback_url
+    if version is not None:
+        payload["version"] = version
+    if hd:
+        payload["hd"] = hd
+    if quality is not None:
+        payload["quality"] = quality
+    if style_reference:
+        payload["style_reference"] = style_reference
+    if moodboard:
+        payload["moodboard"] = moodboard
+
+    result = await client.imagine(**payload)
     return format_imagine_result(result)
 
 

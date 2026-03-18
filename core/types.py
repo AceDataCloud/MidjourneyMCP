@@ -5,6 +5,9 @@ from typing import Literal
 # Midjourney generation modes
 MidjourneyMode = Literal["fast", "relax", "turbo"]
 
+# Midjourney version
+MidjourneyVersion = Literal["5.2", "6", "6.1", "7", "8"]
+
 # Midjourney imagine actions
 ImagineAction = Literal[
     "generate",
@@ -38,3 +41,6 @@ VideoResolution = Literal["480p", "720p"]
 
 # Default mode
 DEFAULT_MODE: MidjourneyMode = "fast"
+
+# Default version (None = use Midjourney's default)
+DEFAULT_VERSION: MidjourneyVersion | None = None
