@@ -1,0 +1,48 @@
+{
+  "name": "mcp-midjourney",
+  "displayName": "Midjourney MCP",
+  "description": "AI Image Generation with Midjourney - Create, edit, blend and transform images via Ace Data Cloud API",
+  "version": "0.1.0",
+  "publisher": "acedatacloud",
+  "icon": "icon.png",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "keywords": [
+    "mcp",
+    "model context protocol",
+    "ai",
+    "copilot",
+    "ace data cloud",
+    "midjourney",
+    "image generation",
+    "ai art",
+    "text to image"
+  ],
+  "homepage": "https://github.com/AceDataCloud/MCPMidjourney",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AceDataCloud/MCPMidjourney"
+  },
+  "bugs": {
+    "url": "https://github.com/AceDataCloud/MCPMidjourney/issues"
+  },
+  "contributes": {
+    "mcpServers": {
+      "midjourney": {
+        "command": "uvx",
+        "args": [
+          "mcp-midjourney"
+        ],
+        "env": {
+          "ACEDATACLOUD_API_TOKEN": ""
+        }
+      }
+    }
+  }
+}
