@@ -186,33 +186,76 @@ Environment Variables:
 
             async def server_card(_request: Request) -> JSONResponse:
                 """MCP Server Card for Smithery and other registries."""
-                return JSONResponse({
-                    "serverInfo": {"name": "MCP Midjourney"},
-                    "authentication": {"required": True, "schemes": ["bearer"]},
-                    "tools": [
-                    {"name": "midjourney_imagine", "description": "Generate images from text prompts"},
-                    {"name": "midjourney_transform", "description": "Transform/upscale/vary existing images"},
-                    {"name": "midjourney_blend", "description": "Blend multiple images together"},
-                    {"name": "midjourney_with_reference", "description": "Generate with image references"},
-                    {"name": "midjourney_describe", "description": "Describe an image in text"},
-                    {"name": "midjourney_edit", "description": "Edit images with inpainting"},
-                    {"name": "midjourney_generate_video", "description": "Generate video from image"},
-                    {"name": "midjourney_extend_video", "description": "Extend a video"},
-                    {"name": "midjourney_translate", "description": "Translate prompts"},
-                    {"name": "midjourney_get_task", "description": "Query task status"},
-                    {"name": "midjourney_get_tasks_batch", "description": "Query multiple tasks"},
-                    {"name": "midjourney_list_actions", "description": "List available actions"},
-                    {"name": "midjourney_get_prompt_guide", "description": "Get prompt writing guide"},
-                    {"name": "midjourney_list_transform_actions", "description": "List transform actions"}
-                    ],
-                    "prompts": [
-                    {"name": "midjourney_image_generation_guide", "description": "Guide for image generation"},
-                    {"name": "midjourney_workflow_examples", "description": "Example workflows"},
-                    {"name": "midjourney_style_suggestions", "description": "Style suggestions"}
-                    ],
-                    "resources": [],
-                })
-
+                return JSONResponse(
+                    {
+                        "serverInfo": {"name": "MCP Midjourney"},
+                        "authentication": {"required": True, "schemes": ["bearer"]},
+                        "tools": [
+                            {
+                                "name": "midjourney_imagine",
+                                "description": "Generate images from text prompts",
+                            },
+                            {
+                                "name": "midjourney_transform",
+                                "description": "Transform/upscale/vary existing images",
+                            },
+                            {
+                                "name": "midjourney_blend",
+                                "description": "Blend multiple images together",
+                            },
+                            {
+                                "name": "midjourney_with_reference",
+                                "description": "Generate with image references",
+                            },
+                            {
+                                "name": "midjourney_describe",
+                                "description": "Describe an image in text",
+                            },
+                            {
+                                "name": "midjourney_edit",
+                                "description": "Edit images with inpainting",
+                            },
+                            {
+                                "name": "midjourney_generate_video",
+                                "description": "Generate video from image",
+                            },
+                            {"name": "midjourney_extend_video", "description": "Extend a video"},
+                            {"name": "midjourney_translate", "description": "Translate prompts"},
+                            {"name": "midjourney_get_task", "description": "Query task status"},
+                            {
+                                "name": "midjourney_get_tasks_batch",
+                                "description": "Query multiple tasks",
+                            },
+                            {
+                                "name": "midjourney_list_actions",
+                                "description": "List available actions",
+                            },
+                            {
+                                "name": "midjourney_get_prompt_guide",
+                                "description": "Get prompt writing guide",
+                            },
+                            {
+                                "name": "midjourney_list_transform_actions",
+                                "description": "List transform actions",
+                            },
+                        ],
+                        "prompts": [
+                            {
+                                "name": "midjourney_image_generation_guide",
+                                "description": "Guide for image generation",
+                            },
+                            {
+                                "name": "midjourney_workflow_examples",
+                                "description": "Example workflows",
+                            },
+                            {
+                                "name": "midjourney_style_suggestions",
+                                "description": "Style suggestions",
+                            },
+                        ],
+                        "resources": [],
+                    }
+                )
 
             @contextlib.asynccontextmanager
             async def lifespan(_app: Starlette):  # type: ignore[no-untyped-def]
