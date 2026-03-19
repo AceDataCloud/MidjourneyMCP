@@ -140,6 +140,27 @@ In your MCP client settings, add:
 - **URL**: `https://midjourney.mcp.acedata.cloud/mcp`
 - **Headers**: `Authorization: Bearer your_api_token_here`
 
+### JetBrains IDEs
+
+Install the [Midjourney MCP plugin](https://plugins.jetbrains.com/plugin/com.acedatacloud.mcp.midjourney) from the JetBrains Marketplace, or configure manually:
+
+1. Go to **Settings → Tools → AI Assistant → Model Context Protocol (MCP)**
+2. Click **Add** and select **HTTP**
+3. Paste this configuration:
+
+```json
+{
+  "mcpServers": {
+    "midjourney": {
+      "url": "https://midjourney.mcp.acedata.cloud/mcp",
+      "headers": {
+        "Authorization": "Bearer your_api_token_here"
+      }
+    }
+  }
+}
+```
+
 ### cURL Test
 
 ```bash
