@@ -1,6 +1,6 @@
 # MCP Midjourney
 
-<!-- mcp-name: io.github.acedatacloud/mcp-midjourney -->
+<!-- mcp-name: io.github.AceDataCloud/mcp-midjourney -->
 
 [![PyPI version](https://img.shields.io/pypi/v/mcp-midjourney.svg)](https://pypi.org/project/mcp-midjourney/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/mcp-midjourney.svg)](https://pypi.org/project/mcp-midjourney/)
