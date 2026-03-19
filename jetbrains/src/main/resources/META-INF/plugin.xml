@@ -1,0 +1,75 @@
+<idea-plugin>
+    <id>com.acedatacloud.mcp.midjourney</id>
+    <name>Midjourney MCP</name>
+    <vendor email="dev@acedata.cloud" url="https://acedata.cloud">Ace Data Cloud</vendor>
+
+    <description><![CDATA[
+<p><b>AI Image Generation</b> with <a href="https://midjourney.com">Midjourney</a> via
+<a href="https://modelcontextprotocol.io">Model Context Protocol (MCP)</a>.</p>
+
+<p>This plugin helps you set up the MCP Midjourney server with JetBrains AI Assistant.
+Once configured, AI Assistant can create, edit, blend and transform images
+— all powered by <a href="https://platform.acedata.cloud">Ace Data Cloud</a>.</p>
+
+<h3>Features</h3>
+<ul>
+    <li><b>15 AI Tools</b> — Create, edit, blend and transform images</li>
+    <li><b>Easy Setup</b> — One-click copy MCP configuration for AI Assistant</li>
+    <li><b>Dual Mode</b> — STDIO (local) and HTTP (remote) server support</li>
+    <li><b>Token Management</b> — Store API token securely in IDE settings</li>
+</ul>
+
+<h3>Available Tools</h3>
+<ul>
+    <li><b>Imagine</b> — Generate images from text prompts</li>
+    <li><b>Variations</b> — Create variations of existing images</li>
+    <li><b>Upscale</b> — Enhance image resolution</li>
+    <li><b>Blend</b> — Blend multiple images together</li>
+    <li><b>Describe</b> — Get text descriptions of images</li>
+    <li><b>Edits</b> — Transform and edit images</li>
+</ul>
+
+<h3>Quick Start</h3>
+<ol>
+    <li>Install this plugin</li>
+    <li>Open <b>Settings → Tools → Midjourney MCP</b></li>
+    <li>Enter your <a href="https://platform.acedata.cloud">Ace Data Cloud</a> API token</li>
+    <li>Click <b>Copy Config</b> and paste into <b>Settings → Tools → AI Assistant → MCP</b></li>
+</ol>
+
+<p>Requires <a href="https://github.com/astral-sh/uv">uv</a> (Python package runner) for STDIO mode,
+or use HTTP mode for zero-install remote access.</p>
+]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+            serviceImplementation="com.acedatacloud.mcp.midjourney.McpSettings"/>
+
+        <applicationConfigurable
+            id="com.acedatacloud.mcp.midjourney.settings"
+            displayName="Midjourney MCP"
+            parentId="tools"
+            instance="com.acedatacloud.mcp.midjourney.McpSettingsConfigurable"/>
+
+        <postStartupActivity
+            implementation="com.acedatacloud.mcp.midjourney.McpStartupActivity"/>
+
+        <notificationGroup id="Midjourney MCP" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <group id="com.acedatacloud.mcp.midjourney.Actions" text="Midjourney MCP" popup="true">
+            <action id="com.acedatacloud.mcp.midjourney.CopyStdioConfig"
+                class="com.acedatacloud.mcp.midjourney.CopyStdioConfigAction"
+                text="Copy STDIO Config"
+                description="Copy STDIO MCP configuration for AI Assistant"/>
+            <action id="com.acedatacloud.mcp.midjourney.CopyHttpConfig"
+                class="com.acedatacloud.mcp.midjourney.CopyHttpConfigAction"
+                text="Copy HTTP Config"
+                description="Copy HTTP MCP configuration for AI Assistant"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+    </actions>
+</idea-plugin>
