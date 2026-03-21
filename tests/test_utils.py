@@ -26,6 +26,7 @@ class TestFormatImagineResult:
         assert data["progress"] == 100
         assert len(data["sub_image_urls"]) == 4
         assert "upscale1" in data["actions"]
+        assert data["mcp_async_submission"]["poll_tool"] == "midjourney_get_task"
 
     def test_format_error(self, mock_error_response):
         """Test formatting error response."""
@@ -64,6 +65,7 @@ class TestFormatVideoResult:
         assert data["task_id"] == "test-video-task-123"
         assert data["video_id"] == "test-video-456"
         assert len(data["video_urls"]) == 2
+        assert data["mcp_async_submission"]["poll_tool"] == "midjourney_get_task"
 
     def test_format_error(self, mock_error_response):
         """Test formatting error response."""
@@ -94,6 +96,7 @@ class TestFormatTaskResult:
         assert data["type"] == "imagine"
         assert data["request"]["action"] == "generate"
         assert data["response"]["success"] is True
+        assert data["mcp_task_polling"]["poll_tool"] == "midjourney_get_task"
 
     def test_format_error(self):
         """Test formatting error response."""
@@ -114,6 +117,7 @@ class TestFormatEditResult:
         assert data["task_id"] == "test-edit-123"
         assert data["image_id"] == "test-edit-image-456"
         assert data["progress"] == 100
+        assert data["mcp_async_submission"]["poll_tool"] == "midjourney_get_task"
 
     def test_format_error(self, mock_error_response):
         """Test formatting error response."""
