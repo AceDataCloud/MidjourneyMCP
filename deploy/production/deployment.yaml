@@ -31,6 +31,8 @@ spec:
           env:
             - name: MCP_SERVER_URL
               value: "https://midjourney.mcp.acedata.cloud"
+            - name: ACEDATACLOUD_OAUTH_CLIENT_ID
+              value: "5Ibhs3fJvTdFfC8XNOskamsAyQlI1tnp5Z6PBCX6Yos"
           resources:
             limits:
               cpu: 500m
