@@ -69,7 +69,8 @@ When the user wants to generate images, choose the appropriate tool based on the
 - Getting inspiration from existing artwork
 
 ## Important Notes:
-1. Image generation is async - always return the task_id to the user
+1. Image and video generation are async in MCP - generation tools should return quickly with a task_id
+2. After imagine/edit/video submission, poll with `midjourney_get_task` until the final URLs are available
 2. Default mode is 'fast' (good balance of speed and credits)
 3. Use 'turbo' for faster results (more credits)
 4. Use 'relax' for slower, cheaper generation
@@ -93,8 +94,8 @@ def midjourney_workflow_examples() -> str:
 ## Workflow 1: Quick Image Generation
 1. User: "Create a cyberpunk city"
 2. Call `midjourney_imagine(prompt="Cyberpunk city at night, neon lights, rain, futuristic, detailed --ar 16:9")`
-3. Return task_id and image_url to user
-4. User can check status with `midjourney_get_task(task_id)`
+3. Return the task_id from the submission response
+4. Poll with `midjourney_get_task(task_id)` until the final image URLs are available
 
 ## Workflow 2: Upscaling Best Image
 1. Generate initial image with `midjourney_imagine`
@@ -111,7 +112,7 @@ def midjourney_workflow_examples() -> str:
 ## Workflow 4: Image Blending
 1. User provides multiple image URLs
 2. Call `midjourney_blend(image_urls=[url1, url2], prompt="Combine the face with the background")`
-3. Return blended result
+3. Poll with `midjourney_get_task(task_id)` for the completed blend result
 
 ## Workflow 5: Style Transfer
 1. User provides reference image URL
@@ -121,7 +122,8 @@ def midjourney_workflow_examples() -> str:
 ## Workflow 6: Video from Image
 1. User has an image they want to animate
 2. Call `midjourney_generate_video(image_url, prompt="Gentle wind blowing through the scene")`
-3. For longer video: `midjourney_extend_video(video_id, prompt="Continue the motion")`
+3. Poll with `midjourney_get_task(task_id)` for the generated videos
+4. For longer video: `midjourney_extend_video(video_id, prompt="Continue the motion")`
 
 ## Tips:
 - Always be descriptive in prompts - include style, lighting, mood, composition
