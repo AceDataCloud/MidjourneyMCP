@@ -1,8 +1,16 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.AceDataCloud/mcp-midjourney",
+  "title": "Midjourney",
   "description": "MCP server for Midjourney AI image generation and editing",
   "version": "2026.3.19.7",
+  "icons": [
+    {
+      "src": "https://cdn.acedata.cloud/wto43b.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
   "repository": {
     "url": "https://github.com/AceDataCloud/MCPMidjourney",
     "source": "github"
@@ -26,7 +34,7 @@
       ]
     }
   ],
-  "websiteUrl": "https://platform.acedata.cloud",
+  "websiteUrl": "https://github.com/AceDataCloud/MCPMidjourney",
   "remotes": [
     {
       "type": "streamable-http",
