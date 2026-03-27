@@ -6,7 +6,7 @@ from pydantic import Field
 
 from core.client import client
 from core.server import mcp
-from core.types import DEFAULT_MODE, MidjourneyMode, VideoResolution
+from core.types import DEFAULT_MODE, VideoMode, VideoResolution
 from core.utils import format_video_result
 
 
@@ -25,7 +25,7 @@ async def midjourney_generate_video(
         ),
     ],
     mode: Annotated[
-        MidjourneyMode,
+        VideoMode,
         Field(description="Generation mode. 'fast' is recommended for most use cases."),
     ] = DEFAULT_MODE,
     resolution: Annotated[
@@ -104,7 +104,7 @@ async def midjourney_extend_video(
         ),
     ] = 0,
     mode: Annotated[
-        MidjourneyMode,
+        VideoMode,
         Field(description="Generation mode."),
     ] = DEFAULT_MODE,
     end_image_url: Annotated[

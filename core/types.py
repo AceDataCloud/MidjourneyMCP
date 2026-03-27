@@ -36,6 +36,9 @@ ImagineAction = Literal[
 # Video actions
 VideoAction = Literal["generate", "extend"]
 
+# Video generation modes (videos do not support 'relax')
+VideoMode = Literal["fast", "turbo"]
+
 # Video resolution options
 VideoResolution = Literal["480p", "720p"]
 
