@@ -36,11 +36,17 @@ ImagineAction = Literal[
 # Video actions
 VideoAction = Literal["generate", "extend"]
 
+# Video mode options (relax is not supported for video generation)
+VideoMode = Literal["fast", "turbo"]
+
 # Video resolution options
 VideoResolution = Literal["480p", "720p"]
 
 # Default mode
 DEFAULT_MODE: MidjourneyMode = "fast"
+
+# Default video mode
+DEFAULT_VIDEO_MODE: VideoMode = "fast"
 
 # Default version (None = use Midjourney's default)
 DEFAULT_VERSION: MidjourneyVersion | None = None
