@@ -26,6 +26,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+SERVER_ICON_URL = "https://cdn.acedata.cloud/wto43b.png"
+
 
 def safe_print(text: str) -> None:
     """Print to stderr safely, handling encoding issues."""
@@ -159,13 +161,22 @@ Environment Variables:
                 return JSONResponse({"status": "ok"})
 
             async def favicon(_request: Request) -> RedirectResponse:
-                return RedirectResponse("https://cdn.acedata.cloud/wto43b.png", status_code=301)
+                return RedirectResponse(SERVER_ICON_URL, status_code=301)
 
             async def server_card(_request: Request) -> JSONResponse:
                 """MCP Server Card for Smithery and other registries."""
                 return JSONResponse(
                     {
                         "serverInfo": {"name": "MCP Midjourney"},
+                        "title": "Midjourney",
+                        "icons": [
+                            {
+                                "src": SERVER_ICON_URL,
+                                "mimeType": "image/png",
+                                "sizes": ["256x256"],
+                            }
+                        ],
+                        "websiteUrl": "https://github.com/AceDataCloud/MCPMidjourney",
                         "authentication": {"required": True, "schemes": ["bearer"]},
                         "tools": [
                             {
