@@ -24,13 +24,13 @@
     "ai art",
     "text to image"
   ],
-  "homepage": "https://github.com/AceDataCloud/MCPMidjourney",
+  "homepage": "https://github.com/AceDataCloud/MidjourneyMCP",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AceDataCloud/MCPMidjourney"
+    "url": "https://github.com/AceDataCloud/MidjourneyMCP"
   },
   "bugs": {
-    "url": "https://github.com/AceDataCloud/MCPMidjourney/issues"
+    "url": "https://github.com/AceDataCloud/MidjourneyMCP/issues"
   },
   "contributes": {
     "mcpServers": {

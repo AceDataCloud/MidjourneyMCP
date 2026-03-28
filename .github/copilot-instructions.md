@@ -1,4 +1,4 @@
-# Copilot Instructions for MCPMidjourney
+# Copilot Instructions for MidjourneyMCP
 
 ## Sync from Docs
 

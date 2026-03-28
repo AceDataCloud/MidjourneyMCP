@@ -474,7 +474,7 @@ twine upload dist/*
 ## Project Structure
 
 ```
-MCPMidjourney/
+MidjourneyMCP/
 ├── core/                   # Core modules
 │   ├── __init__.py
 │   ├── client.py          # HTTP client for Midjourney API

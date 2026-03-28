@@ -58,7 +58,7 @@ Connects to the hosted MCP server at `midjourney.mcp.acedata.cloud`. No local in
 - [Ace Data Cloud Platform](https://platform.acedata.cloud)
 - [API Documentation](https://docs.acedata.cloud)
 - [PyPI Package](https://pypi.org/project/mcp-midjourney/)
-- [Source Code](https://github.com/AceDataCloud/MCPMidjourney)
+- [Source Code](https://github.com/AceDataCloud/MidjourneyMCP)
 
 ## License
 
