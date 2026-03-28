@@ -421,8 +421,8 @@ Options:
 
 ```bash
 # Clone repository
-git clone https://github.com/AceDataCloud/mcp-midjourney.git
-cd mcp-midjourney
+git clone https://github.com/AceDataCloud/MidjourneyMCP.git
+cd MidjourneyMCP
 
 # Create virtual environment
 python -m venv .venv
