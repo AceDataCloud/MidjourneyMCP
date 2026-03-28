@@ -176,7 +176,7 @@ Environment Variables:
                                 "sizes": ["256x256"],
                             }
                         ],
-                        "websiteUrl": "https://github.com/AceDataCloud/MCPMidjourney",
+                        "websiteUrl": "https://github.com/AceDataCloud/MidjourneyMCP",
                         "authentication": {"required": True, "schemes": ["bearer"]},
                         "tools": [
                             {
