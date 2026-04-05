@@ -25,6 +25,26 @@ Generate AI images, videos, and manage creative projects directly from Claude, V
 - **Translation** - Translate Chinese prompts to English
 - **Task Tracking** - Monitor generation progress and retrieve results
 
+## Tool Reference
+
+| Tool | Description |
+|------|-------------|
+| `midjourney_imagine` | Generate AI images from a text prompt using Midjourney. |
+| `midjourney_transform` | Transform an existing Midjourney image with various operations. |
+| `midjourney_blend` | Blend multiple images together using Midjourney. |
+| `midjourney_with_reference` | Generate images using a reference image as inspiration. |
+| `midjourney_edit` | Edit an existing image using Midjourney. |
+| `midjourney_describe` | Get AI-generated descriptions of an image. |
+| `midjourney_generate_video` | Generate a video from text prompt and reference image using Midjourney. |
+| `midjourney_extend_video` | Extend an existing Midjourney video to make it longer. |
+| `midjourney_translate` | Translate Chinese text to English for use as Midjourney prompts. |
+| `midjourney_get_seed` | Get the seed value of a previously generated Midjourney image. |
+| `midjourney_get_task` | Query the status and result of a Midjourney generation task. |
+| `midjourney_get_tasks_batch` | Query multiple Midjourney generation tasks at once. |
+| `midjourney_list_actions` | List all available Midjourney API actions and corresponding tools. |
+| `midjourney_get_prompt_guide` | Get guidance on writing effective prompts for Midjourney. |
+| `midjourney_list_transform_actions` | List all available transformation actions for Midjourney images. |
+
 ## Quick Start
 
 ### 1. Get Your API Token

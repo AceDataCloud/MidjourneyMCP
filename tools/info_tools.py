@@ -13,6 +13,7 @@ async def midjourney_list_actions() -> str:
     Returns:
         Categorized list of all actions and their corresponding tools.
     """
+    # Last updated: 2026-04-05
     return """Available Midjourney Actions and Tools:
 
 Image Generation:
@@ -59,6 +60,7 @@ async def midjourney_get_prompt_guide() -> str:
     Returns:
         Complete guide with prompt structure, parameters, and examples.
     """
+    # Last updated: 2026-04-05
     return """Midjourney Prompt Guide:
 
 Prompt Structure:
@@ -116,6 +118,7 @@ async def midjourney_list_transform_actions() -> str:
     Returns:
         Detailed list of all transformation actions and when to use them.
     """
+    # Last updated: 2026-04-05
     return """Midjourney Transform Actions:
 
 From 2x2 Grid (after initial generation):
