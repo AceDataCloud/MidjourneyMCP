@@ -1,4 +1,4 @@
-# MCP Midjourney
+# MidjourneyMCP
 
 <!-- mcp-name: io.github.AceDataCloud/mcp-midjourney -->
 
