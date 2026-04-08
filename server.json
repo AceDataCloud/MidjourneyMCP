@@ -8,7 +8,9 @@
     {
       "src": "https://cdn.acedata.cloud/wto43b.png",
       "mimeType": "image/png",
-      "sizes": ["256x256"]
+      "sizes": [
+        "256x256"
+      ]
     }
   ],
   "repository": {
@@ -34,7 +36,7 @@
       ]
     }
   ],
-  "websiteUrl": "https://github.com/AceDataCloud/MidjourneyMCP",
+  "websiteUrl": "https://midjourney.mcp.acedata.cloud",
   "remotes": [
     {
       "type": "streamable-http",
