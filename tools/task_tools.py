@@ -73,9 +73,7 @@ async def midjourney_get_tasks_batch(
     ] = 0,
     limit: Annotated[
         int,
-        Field(
-            description="Maximum number of tasks to return in a batch. Default is 12."
-        ),
+        Field(description="Maximum number of tasks to return in a batch. Default is 12."),
     ] = 12,
 ) -> str:
     """Query multiple Midjourney generation tasks at once.
