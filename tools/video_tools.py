@@ -15,7 +15,7 @@ async def midjourney_generate_video(
     image_url: Annotated[
         str,
         Field(
-            description="URL of the first frame reference image. This image will be used as the starting point for the video."
+            description="URL of the first-frame reference image when generating the video. Required for video generation (Midjourney video generation is image-to-video only and does not support pure text-to-video)."
         ),
     ],
     prompt: Annotated[
@@ -51,14 +51,16 @@ async def midjourney_generate_video(
         ),
     ] = None,
 ) -> str:
-    """Generate a video from text prompt and reference image using Midjourney.
+    """Generate a video from a reference image using Midjourney.
 
     This creates an AI-generated video based on your description and a starting
-    frame image. You can optionally specify an ending frame for more control.
+    frame image. Midjourney video generation is image-to-video only — a reference
+    image is always required. You can optionally specify an ending frame for more
+    control.
 
     Use this when:
     - You want to animate a still image
-    - You want to create short video clips from descriptions
+    - You want to create short video clips from a reference image
     - You need AI-generated video content
 
     The generation process returns 4 video variations.
