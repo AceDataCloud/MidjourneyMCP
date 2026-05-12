@@ -207,6 +207,11 @@ class MidjourneyClient:
         logger.info(f"🌱 Getting seed for image: {kwargs.get('image_id', '')}")
         return await self.request("/midjourney/seed", kwargs)
 
+    async def shorten(self, **kwargs: Any) -> dict[str, Any]:
+        """Shorten a prompt using Midjourney's prompt analyzer."""
+        logger.info(f"✂️ Shortening prompt: {kwargs.get('prompt', '')[:50]}...")
+        return await self.request("/midjourney/shorten", kwargs)
+
     async def query_task(self, **kwargs: Any) -> dict[str, Any]:
         """Query task status using the tasks endpoint."""
         task_id = kwargs.get("id") or kwargs.get("ids", [])

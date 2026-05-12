@@ -25,6 +25,7 @@ Image Generation:
 Image Editing:
 - midjourney_edit: Edit an existing image with a text prompt
 - midjourney_describe: Get AI descriptions of an image (reverse prompt)
+- midjourney_shorten: Analyze and shorten a prompt to its most impactful elements
 
 Video Generation:
 - midjourney_generate_video: Generate video from text and reference image

@@ -127,6 +127,7 @@ Environment Variables:
     safe_print("    - midjourney_edit")
     safe_print("    - midjourney_generate_video")
     safe_print("    - midjourney_extend_video")
+    safe_print("    - midjourney_shorten")
     safe_print("    - midjourney_translate")
     safe_print("    - midjourney_get_task")
     safe_print("    - midjourney_get_tasks_batch")
@@ -209,6 +210,10 @@ Environment Variables:
                             },
                             {"name": "midjourney_extend_video", "description": "Extend a video"},
                             {"name": "midjourney_translate", "description": "Translate prompts"},
+                            {
+                                "name": "midjourney_shorten",
+                                "description": "Shorten and analyze a prompt",
+                            },
                             {"name": "midjourney_get_task", "description": "Query task status"},
                             {
                                 "name": "midjourney_get_tasks_batch",

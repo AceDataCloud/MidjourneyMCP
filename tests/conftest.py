@@ -132,6 +132,20 @@ def mock_edit_response():
 
 
 @pytest.fixture
+def mock_shorten_response():
+    """Mock successful shorten response."""
+    return {
+        "prompts": [
+            "a serene mountain lake at sunrise, mist rising from the water, golden hour lighting --ar 16:9",
+            "mountain lake sunrise with mist, golden light --ar 16:9 --v 6",
+            "tranquil alpine lake, dawn mist, warm golden tones, cinematic --ar 16:9",
+            "sunrise over a misty mountain lake, rich golden hour photography --ar 16:9 --style raw",
+            "misty lake at dawn, mountains in background, golden sunrise --ar 16:9",
+        ]
+    }
+
+
+@pytest.fixture
 def mock_error_response():
     """Mock error response."""
     return {

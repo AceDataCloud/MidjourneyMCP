@@ -129,6 +129,18 @@ def format_task_result(data: dict[str, Any]) -> str:
     )
 
 
+def format_shorten_result(data: dict[str, Any]) -> str:
+    """Format shorten result as JSON.
+
+    Args:
+        data: API response dictionary
+
+    Returns:
+        JSON string representation of the result
+    """
+    return json.dumps(data, ensure_ascii=False, indent=2)
+
+
 def format_edit_result(data: dict[str, Any]) -> str:
     """Format edit result as JSON.
 
