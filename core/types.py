@@ -6,7 +6,7 @@ from typing import Literal
 MidjourneyMode = Literal["fast", "relax", "turbo"]
 
 # Midjourney version
-MidjourneyVersion = Literal["5.2", "6", "6.1", "7", "8"]
+MidjourneyVersion = Literal["5.2", "6", "6.1", "7", "8", "8.1"]
 
 # Midjourney imagine actions
 ImagineAction = Literal[
