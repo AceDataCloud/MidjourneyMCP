@@ -2,12 +2,12 @@
   "name": "mcp-midjourney",
   "displayName": "Midjourney MCP",
   "description": "AI image generation with Midjourney — imagine, edit, blend, upscale, describe.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "acedatacloud",
   "icon": "icon.png",
   "license": "MIT",
   "engines": {
-    "vscode": "^1.99.0"
+    "vscode": "^1.101.0"
   },
   "categories": [
     "AI",
@@ -37,22 +37,25 @@
   "bugs": {
     "url": "https://github.com/AceDataCloud/MidjourneyMCP/issues"
   },
+  "activationEvents": [],
+  "main": "./extension.js",
   "contributes": {
-    "mcpServers": {
-      "midjourney": {
-        "type": "http",
-        "url": "https://midjourney.mcp.acedata.cloud/mcp",
-        "headers": {
-          "Authorization": "Bearer ${input:acedatacloud_api_token}"
-        }
-      }
-    },
-    "inputs": [
+    "mcpServerDefinitionProviders": [
       {
-        "type": "promptString",
-        "id": "acedatacloud_api_token",
-        "description": "Ace Data Cloud API token. Sign in at https://platform.acedata.cloud and create a token in 'API Keys'. Stored securely by VS Code.",
-        "password": true
+        "id": "acedatacloud.midjourney",
+        "label": "Midjourney MCP"
+      }
+    ],
+    "commands": [
+      {
+        "command": "acedatacloud.midjourney.setApiToken",
+        "title": "Midjourney MCP: Set Ace Data Cloud API Key",
+        "category": "MCP"
+      },
+      {
+        "command": "acedatacloud.midjourney.clearApiToken",
+        "title": "Midjourney MCP: Clear Ace Data Cloud API Key",
+        "category": "MCP"
       }
     ]
   }
