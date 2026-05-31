@@ -1,8 +1,8 @@
 {
   "name": "mcp-midjourney",
   "displayName": "Midjourney MCP",
-  "description": "AI Image Generation with Midjourney - Create, edit, blend and transform images via Ace Data Cloud API",
-  "version": "0.1.0",
+  "description": "AI image generation with Midjourney — imagine, edit, blend, upscale, describe.",
+  "version": "0.2.0",
   "publisher": "acedatacloud",
   "icon": "icon.png",
   "license": "MIT",
@@ -22,8 +22,13 @@
     "midjourney",
     "image generation",
     "ai art",
-    "text to image"
+    "text to image",
+    "image editing"
   ],
+  "galleryBanner": {
+    "color": "#0E1117",
+    "theme": "dark"
+  },
   "homepage": "https://github.com/AceDataCloud/MidjourneyMCP",
   "repository": {
     "type": "git",
@@ -35,14 +40,20 @@
   "contributes": {
     "mcpServers": {
       "midjourney": {
-        "command": "uvx",
-        "args": [
-          "mcp-midjourney"
-        ],
-        "env": {
-          "ACEDATACLOUD_API_TOKEN": ""
+        "type": "http",
+        "url": "https://midjourney.mcp.acedata.cloud/mcp",
+        "headers": {
+          "Authorization": "Bearer ${input:acedatacloud_api_token}"
         }
       }
-    }
+    },
+    "inputs": [
+      {
+        "type": "promptString",
+        "id": "acedatacloud_api_token",
+        "description": "Ace Data Cloud API token. Sign in at https://platform.acedata.cloud and create a token in 'API Keys'. Stored securely by VS Code.",
+        "password": true
+      }
+    ]
   }
 }
