@@ -26,6 +26,13 @@ You can rotate or remove the API key any time from the command palette:
 > The default config talks to the **hosted streamable-HTTP endpoint** at
 > `https://midjourney.mcp.acedata.cloud/mcp` — no Python, no `uvx`, no local install needed.
 
+## VS Code Setup Guide
+
+For screenshots, token setup, project-level and user-level `mcp.json`, and Copilot Agent Mode examples, see:
+
+- [Midjourney MCP VS Code guide](https://platform.acedata.cloud/documents/promotion_article_mcp_midjourney_vscode)
+- [All Ace Data Cloud MCP servers in VS Code](https://platform.acedata.cloud/documents/promotion_article_mcp_all_vscode)
+
 ### Example prompts
 
 - "Generate an isometric pixel-art illustration of a cozy cafe. Use midjourney."
@@ -36,7 +43,7 @@ You can rotate or remove the API key any time from the command palette:
 
 ## Tool Reference
 
-**15 tools** available via this server.
+**16 tools** available via this server.
 
 | Tool | Description |
 | --- | --- |
@@ -49,6 +56,7 @@ You can rotate or remove the API key any time from the command palette:
 | `midjourney_generate_video` | Generate a video from text prompt and reference image using Midjourney. |
 | `midjourney_extend_video` | Extend an existing Midjourney video to make it longer. |
 | `midjourney_translate` | Translate Chinese text to English for use as Midjourney prompts. |
+| `midjourney_shorten` | Analyze and shorten long Midjourney prompts while preserving key ideas. |
 | `midjourney_get_seed` | Get the seed value of a previously generated Midjourney image. |
 | `midjourney_get_task` | Query the status and result of a Midjourney generation task. |
 | `midjourney_get_tasks_batch` | Query multiple Midjourney generation tasks at once. |
@@ -99,7 +107,7 @@ this extension.
     {
       "type": "promptString",
       "id": "acedatacloud_api_token",
-    "description": "Ace Data Cloud API key",
+      "description": "Ace Data Cloud API key",
       "password": true
     }
   ]
