@@ -1,0 +1,415 @@
+name: Publish to PyPI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build distribution
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Generate date-based version
+        id: version
+        run: |
+          # 版本格式: YYYY.MM.DD.BUILD
+          # BUILD 是当天的构建序号，从 PyPI 获取已发布版本来确定
+          DATE_PREFIX=$(date +'%Y.%-m.%-d')
+
+          # 获取当天已发布的最高版本号
+          pip install requests -q
+          LATEST_BUILD=$(python -c "
+          import requests
+          import re
+          try:
+              resp = requests.get('https://pypi.org/pypi/mcp-midjourney/json', timeout=10)
+              if resp.status_code == 200:
+                  versions = resp.json().get('releases', {}).keys()
+                  today_prefix = '${DATE_PREFIX}'
+                  today_versions = [v for v in versions if v.startswith(today_prefix)]
+                  if today_versions:
+                      builds = []
+                      for v in today_versions:
+                          parts = v.split('.')
+                          if len(parts) == 4:
+                              builds.append(int(parts[3]))
+                      print(max(builds) + 1 if builds else 0)
+                  else:
+                      print(0)
+              else:
+                  print(0)
+          except:
+              print(0)
+          ")
+
+          VERSION="${DATE_PREFIX}.${LATEST_BUILD}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Update version in pyproject.toml
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          python -c "
+          import re
+          with open('pyproject.toml', 'r') as f:
+              content = f.read()
+          content = re.sub(r'version = \"[^\"]+\"', f'version = \"$VERSION\"', content, count=1)
+          with open('pyproject.toml', 'w') as f:
+              f.write(content)
+          "
+          echo "Updated pyproject.toml to version $VERSION"
+          cat pyproject.toml | grep -m1 "version"
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build package
+        run: python -m build
+
+
+      - name: Upload distribution artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: python-package-distributions
+          path: dist/
+
+  publish-pypi:
+    name: Publish to PyPI
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/mcp-midjourney/${{ needs.build.outputs.version }}
+    steps:
+      - name: Download distribution artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          pip install "twine>=5.0,<6.1"
+          twine upload dist/*
+
+  create-release:
+    name: Create GitHub Release
+    if: github.event_name == 'push'
+    needs: [build, publish-pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download distribution artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ needs.build.outputs.version }}" dist/* \
+            --title "v${{ needs.build.outputs.version }}" \
+            --generate-notes \
+            --repo '${{ github.repository }}' || echo "Release already exists, skipping"
+
+  publish-mcp-registry:
+    name: Publish to MCP Registry
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [build, publish-pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Update server.json version
+        run: |
+          VERSION="${{ needs.build.outputs.version }}"
+          python3 -c "
+          import json
+          with open('server.json', 'r') as f:
+              data = json.load(f)
+          data['version'] = '$VERSION'
+          for pkg in data.get('packages', []):
+              pkg['version'] = '$VERSION'
+          with open('server.json', 'w') as f:
+              json.dump(data, f, indent=2)
+              f.write('\n')
+          "
+
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+
+      - name: Authenticate to MCP Registry
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish to MCP Registry
+        run: ./mcp-publisher publish
+
+  publish-vscode:
+    name: Publish VS Code Extension
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install vsce
+        run: npm install -g @vscode/vsce
+
+      - name: Generate version
+        working-directory: vscode
+        run: |
+          YEAR=$(date +'%Y')
+          MMDD=$(date +'%-m%d')
+          export YEAR MMDD
+          export EXT_ID="acedatacloud.mcp-midjourney"
+          LATEST_BUILD=$(node -e "
+            const https = require('https');
+            const data = JSON.stringify({
+              filters: [{criteria: [{filterType: 7, value: process.env.EXT_ID}]}],
+              flags: 914
+            });
+            const req = https.request({
+              hostname: 'marketplace.visualstudio.com',
+              path: '/_apis/public/gallery/extensionquery',
+              method: 'POST',
+              headers: {'Content-Type':'application/json','Accept':'application/json;api-version=3.0-preview.1'}
+            }, res => {
+              let body = '';
+              res.on('data', d => body += d);
+              res.on('end', () => {
+                try {
+                  const r = JSON.parse(body);
+                  const exts = r.results?.[0]?.extensions || [];
+                  if (!exts.length) { console.log(0); return; }
+                  const vers = exts[0].versions?.map(v => v.version) || [];
+                  const todayPrefix = process.env.YEAR + '.' + process.env.MMDD + '.';
+                  const todayVers = vers.filter(v => v.startsWith(todayPrefix));
+                  if (!todayVers.length) { console.log(0); return; }
+                  const builds = todayVers.map(v => parseInt(v.split('.')[2] || 0));
+                  console.log(Math.max(...builds) + 1);
+                } catch(e) { console.log(0); }
+              });
+            });
+            req.on('error', () => console.log(0));
+            req.write(data);
+            req.end();
+          ")
+          VERSION="${YEAR}.${MMDD}.${LATEST_BUILD}"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Publishing version $VERSION"
+          node -e "
+            const fs = require('fs');
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            pkg.version = '$VERSION';
+            fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+          "
+
+      - name: Package extension
+        working-directory: vscode
+        run: vsce package --no-git-tag-version
+
+      - name: Publish to VS Code Marketplace
+        working-directory: vscode
+        run: vsce publish --no-git-tag-version -p ${{ secrets.VSCE_PAT }}
+
+
+  publish-smithery:
+    name: Publish to Smithery
+    if: github.event_name == 'push'
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Update server.json version
+        run: |
+          VERSION="${{ needs.build.outputs.version }}"
+          python3 -c "
+          import json
+          with open('server.json', 'r') as f:
+              data = json.load(f)
+          data['version'] = '$VERSION'
+          for pkg in data.get('packages', []):
+              pkg['version'] = '$VERSION'
+          with open('server.json', 'w') as f:
+              json.dump(data, f, indent=2)
+              f.write('\n')
+          "
+
+      - name: Install Smithery CLI
+        run: npm install -g @smithery/cli@latest
+
+      - name: Publish to Smithery
+        env:
+          SMITHERY_API_KEY: ${{ secrets.SMITHERY_API_KEY }}
+        run: |
+          smithery mcp publish "https://midjourney.mcp.acedata.cloud/mcp" --name acedatacloud-mcp/mcp-midjourney --config-schema '{"type":"object","properties":{"apiKey":{"type":"string","description":"AceDataCloud API Bearer Token (get from https://platform.acedata.cloud)","x-from":{"header":"x-api-key"},"x-to":{"header":"Authorization","prefix":"Bearer "}}},"required":["apiKey"]}' 2>&1 || echo "Smithery publish completed"
+  notify-dify-plugin:
+    name: Notify Dify Plugin Update
+    if: github.event_name == 'push'
+    needs: [build, publish-pypi]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dify plugin sync
+        run: |
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.VSCODE_MCP_DISPATCH_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/AceDataCloud/Dify/dispatches" \
+            -d '{"event_type":"mcp-plugin-update","client_payload":{"mcp_name":"midjourney","source":"${{ github.repository }}","version":"${{ needs.build.outputs.version }}"}}'
+          echo "Triggered Dify plugin sync for midjourney"
+
+  publish-jetbrains:
+    name: Publish JetBrains Plugin
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Generate version
+        id: jb_version
+        run: |
+          # Use CalVer: YYYY.M.D.BUILD (match PyPI format)
+          YEAR=$(date +'%Y')
+          MONTH=$(date +'%-m')
+          DAY=$(date +'%-d')
+          VERSION_PREFIX="${YEAR}.${MONTH}.${DAY}"
+          # Query JetBrains Marketplace for latest version today
+          BUILD=$(python3 -c "
+          import urllib.request, json
+          try:
+              url = 'https://plugins.jetbrains.com/api/plugins/com.acedatacloud.mcp.midjourney/updates?channel=&size=5'
+              req = urllib.request.Request(url, headers={'Accept': 'application/json'})
+              resp = urllib.request.urlopen(req, timeout=10)
+              updates = json.loads(resp.read())
+              prefix = '${VERSION_PREFIX}.'
+              builds = [int(u['version'].split('.')[-1]) for u in updates if u['version'].startswith(prefix)]
+              print(max(builds) + 1 if builds else 0)
+          except:
+              print(0)
+          ")
+          VERSION="${VERSION_PREFIX}.${BUILD}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Publishing JetBrains plugin version $VERSION"
+
+      - name: Update plugin version
+        working-directory: jetbrains
+        run: |
+          sed -i "s/pluginVersion = .*/pluginVersion = ${{ steps.jb_version.outputs.version }}/" gradle.properties
+
+      - name: Build plugin
+        working-directory: jetbrains
+        run: ./gradlew buildPlugin
+
+      - name: Publish to JetBrains Marketplace
+        working-directory: jetbrains
+        env:
+          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: |
+          if [ -z "$PUBLISH_TOKEN" ]; then
+            echo "JETBRAINS_MARKETPLACE_TOKEN not set, skipping publish"
+            exit 0
+          fi
+          OUTPUT=$(./gradlew publishPlugin 2>&1) && echo "$OUTPUT" || {
+            echo "$OUTPUT"
+            if echo "$OUTPUT" | grep -q "already contains version"; then
+              echo "Version already published, skipping"
+              exit 0
+            elif echo "$OUTPUT" | grep -q "Cannot find plugin"; then
+              echo "Plugin not yet registered, uploading via REST API..."
+              PLUGIN_ZIP=$(find build/distributions -name "*.zip" | head -1)
+              if [ -z "$PLUGIN_ZIP" ]; then
+                echo "ERROR: No plugin ZIP found in build/distributions/"
+                exit 1
+              fi
+              RESPONSE=$(curl -s -w "\n%{http_code}" \
+                -H "Authorization: Bearer $PUBLISH_TOKEN" \
+                -F "file=@$PLUGIN_ZIP" \
+                -F "licenseUrl=https://opensource.org/licenses/MIT" \
+                -F "tags=Code tools" \
+                -F "vendor=acedatacloud" \
+                https://plugins.jetbrains.com/api/plugins/intellij/upload)
+              HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+              BODY=$(echo "$RESPONSE" | head -n -1)
+              echo "Response ($HTTP_CODE): $BODY"
+              if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+                echo "Successfully uploaded plugin via REST API"
+                exit 0
+              else
+                echo "REST API upload failed with HTTP $HTTP_CODE"
+                exit 1
+              fi
+            fi
+            exit 1
+          }
+
+  publish-dockerhub:
+    name: Publish to Docker Hub
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            acedatacloud/mcp-midjourney:${{ needs.build.outputs.version }}
+            acedatacloud/mcp-midjourney:latest
+          platforms: linux/amd64,linux/arm64
