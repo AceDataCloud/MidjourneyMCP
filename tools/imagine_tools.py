@@ -21,7 +21,7 @@ async def midjourney_imagine(
     mode: Annotated[
         MidjourneyMode,
         Field(
-            description="Generation mode. 'fast' is recommended for most use cases. 'turbo' is faster but uses more credits. 'relax' is slower but cheaper."
+            description="Generation mode. 'fast' is recommended and 'relax' is slower but cheaper. 'turbo' is faster on supported versions, but V8.1 only supports fast and relax."
         ),
     ] = DEFAULT_MODE,
     translation: Annotated[
@@ -55,25 +55,25 @@ async def midjourney_imagine(
     hd: Annotated[
         bool,
         Field(
-            description="Enable HD mode (V8/V8.1). Generates higher resolution images at 4x cost."
+            description="Enable 2K HD output. V8.1 uses separate SD and HD resolution-based rates; V8.0 Alpha uses different premium rules."
         ),
     ] = False,
     quality: Annotated[
         str | None,
         Field(
-            description="Image quality level. Values: '.25', '.5', '1', '2', '4'. Quality '4' is V8/V8.1 only."
+            description="Image quality level for versions that support --quality / --q. This parameter is not supported in V8.1; use hd for higher-resolution V8.1 output."
         ),
     ] = None,
     style_reference: Annotated[
         bool,
         Field(
-            description="Whether the prompt includes --sref style reference. In V8 this incurs 4x cost."
+            description="Whether the prompt includes --sref style reference. V8.1 bills it at the selected SD/HD resolution rate; V8.0 Alpha uses different premium rules."
         ),
     ] = False,
     moodboard: Annotated[
         bool,
         Field(
-            description="Whether using moodboard feature (V8 only, multiple reference images). Incurs 4x cost."
+            description="Whether the prompt uses a moodboard. V8.1 bills it at the selected SD/HD resolution rate; V8.0 Alpha uses different premium rules."
         ),
     ] = False,
 ) -> str:

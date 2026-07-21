@@ -72,16 +72,20 @@ When the user wants to generate images, choose the appropriate tool based on the
 1. Image and video generation are async in MCP - generation tools should return quickly with a task_id
 2. After imagine/edit/video submission, poll with `midjourney_get_task` until the final URLs are available
 2. Default mode is 'fast' (good balance of speed and credits)
-3. Use 'turbo' for faster results (more credits)
+3. Use 'turbo' for faster results on versions that support it; V8.1 does not support Turbo
 4. Use 'relax' for slower, cheaper generation
 
-## Midjourney V8/V8.1 Features:
+## Midjourney V8.1 Features:
 - **V8.1 is the latest model** - use `version='8.1'` for the newest capabilities
-- **HD Mode** (`hd=True`): Generates 2K resolution images. V8/V8.1 only. Costs 4x credits.
-- **Quality 4** (`quality='4'`): Ultra-detail mode. V8/V8.1 only. Costs 4x credits.
-- **HD + Q4 combined**: Maximum quality. Costs 16x credits.
-- **Style Reference** (`style_reference=True`): When prompt uses --sref. V8 premium feature, costs 4x.
-- **Moodboard** (`moodboard=True`): Blending multiple reference images. V8 premium feature, costs 4x.
+- **Resolution**: Standard (`hd=False`) and HD 2K (`hd=True`) use separate resolution-based rates.
+- **Quality is unsupported**: Do not use `quality` / `--q` with V8.1.
+- **Modes**: Use `fast` or `relax`; Turbo is not supported in V8.1.
+- **Style Reference and Moodboards**: Supported and billed at the selected SD/HD resolution rate.
+
+## Midjourney V8.0 Alpha Features:
+- **Quality 4** (`quality='4'`) and **HD Mode** each cost 4x credits.
+- **HD + Q4 combined** costs 16x credits.
+- **Style Reference / Moodboard** premium rules differ from V8.1.
 - V8 does NOT support --iw (image weight) parameter.
 """
 
@@ -130,8 +134,8 @@ def midjourney_workflow_examples() -> str:
 - Use aspect ratio parameter (--ar) for specific dimensions
 - Use --no parameter to exclude unwanted elements
 - For Chinese speakers, offer translation with `midjourney_translate`
-- For V8/V8.1: use `version='8.1'` and consider `hd=True` for 2K, `quality='4'` for ultra detail
-- V8 premium features (sref, moodboard, HD, Q4) cost 4x credits each; HD+Q4 together cost 16x
+- For V8.1: use `version='8.1'` and consider `hd=True` for 2K; do not set `quality` or use Turbo
+- V8.1 style references and moodboards use the selected SD/HD resolution rate
 """
 
 
@@ -162,7 +166,7 @@ A good prompt includes:
 "Futuristic skyscraper with organic curves, glass and steel, sunset lighting, architectural visualization, ultra detailed --ar 9:16"
 
 **Product:**
-"Luxury perfume bottle, crystal clear, studio lighting, reflections on black surface, commercial photography --ar 1:1 --q 2"
+"Luxury perfume bottle, crystal clear, studio lighting, reflections on black surface, commercial photography --ar 1:1"
 
 **Fantasy:**
 "Ancient wizard casting spell, magical energy, floating runes, dark forest background, epic fantasy art, detailed --ar 2:3"
