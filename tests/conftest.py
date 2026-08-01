@@ -96,7 +96,7 @@ def mock_task_response():
         "id": "task-123",
         "type": "imagine",
         "created_at": "2025-01-21T00:00:00.000Z",
-        "finished_at": "2025-01-21T00:01:00.000Z",
+        "finished_at": 1737417660.0,
         "request": {
             "action": "generate",
             "prompt": "A test image",
