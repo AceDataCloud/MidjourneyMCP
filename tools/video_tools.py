@@ -109,6 +109,10 @@ async def midjourney_extend_video(
         VideoMode,
         Field(description="Generation mode."),
     ] = DEFAULT_VIDEO_MODE,
+    resolution: Annotated[
+        VideoResolution | None,
+        Field(description="Optional video resolution. '720p' or '480p'."),
+    ] = None,
     end_image_url: Annotated[
         str,
         Field(
@@ -144,6 +148,8 @@ async def midjourney_extend_video(
         "callback_url": callback_url,
     }
 
+    if resolution:
+        payload["resolution"] = resolution
     if end_image_url:
         payload["end_image_url"] = end_image_url
 
