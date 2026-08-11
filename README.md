@@ -1,5 +1,7 @@
 # MidjourneyMCP
 
+[![MCP Toplist](https://mcptoplist.com/badge/io.github.AceDataCloud%2Fmcp-midjourney.svg)](https://mcptoplist.com/server/io.github.AceDataCloud%2Fmcp-midjourney)
+
 <!-- mcp-name: io.github.AceDataCloud/mcp-midjourney -->
 
 [![PyPI version](https://img.shields.io/pypi/v/mcp-midjourney.svg)](https://pypi.org/project/mcp-midjourney/)
