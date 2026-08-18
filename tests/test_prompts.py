@@ -10,6 +10,7 @@ def test_v81_guidance_excludes_unsupported_quality_and_turbo() -> None:
     guide = midjourney_image_generation_guide()
     examples = midjourney_workflow_examples()
 
+    assert "V8.2 is the latest model" in guide
     assert "Quality is unsupported" in guide
     assert "Turbo is not supported in V8.1" in guide
     assert "separate resolution-based rates" in guide
@@ -21,8 +22,8 @@ def test_v81_guidance_excludes_unsupported_quality_and_turbo() -> None:
 def test_v81_tool_schema_describes_supported_controls() -> None:
     source = (Path(__file__).resolve().parents[1] / "tools" / "imagine_tools.py").read_text()
 
-    assert "V8.1 only supports fast and relax" in source
+    assert "V8.2 supports it; V8.1 only supports fast and relax" in source
     assert "separate SD and HD resolution-based rates" in source
     assert "This parameter is not supported in V8.1" in source
     assert source.count("selected SD/HD resolution rate") == 2
-    assert DEFAULT_VERSION == "8.1"
+    assert DEFAULT_VERSION == "8.2"

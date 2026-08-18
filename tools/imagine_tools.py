@@ -21,7 +21,7 @@ async def midjourney_imagine(
     mode: Annotated[
         MidjourneyMode,
         Field(
-            description="Generation mode. 'fast' is recommended and 'relax' is slower but cheaper. 'turbo' is faster on supported versions, but V8.1 only supports fast and relax."
+            description="Generation mode. 'fast' is recommended and 'relax' is slower but cheaper. 'turbo' is faster on supported versions. V8.2 supports it; V8.1 only supports fast and relax."
         ),
     ] = DEFAULT_MODE,
     translation: Annotated[
@@ -49,19 +49,19 @@ async def midjourney_imagine(
     version: Annotated[
         MidjourneyVersion | None,
         Field(
-            description="Midjourney model version to use, e.g. '8.1', '8', '7', '6.1'. '8.1' is the latest version and is recommended. Leave unset to use Midjourney's default."
+            description="Midjourney model version to use, e.g. '8.2', '8.1', '8', '7', '6.1'. '8.2' is the latest version and is recommended. Leave unset to use Midjourney's default."
         ),
     ] = None,
     hd: Annotated[
         bool,
         Field(
-            description="Enable 2K HD output. V8.1 uses separate SD and HD resolution-based rates; V8.0 Alpha uses different premium rules."
+            description="Enable HD output. V8.2 supports HD; V8.1 uses separate SD and HD resolution-based rates."
         ),
     ] = False,
     quality: Annotated[
         str | None,
         Field(
-            description="Image quality level for versions that support --quality / --q. This parameter is not supported in V8.1; use hd for higher-resolution V8.1 output."
+            description="Image quality level for versions that support --quality / --q. V8.2 supports it. This parameter is not supported in V8.1."
         ),
     ] = None,
     style_reference: Annotated[

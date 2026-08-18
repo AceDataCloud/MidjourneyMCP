@@ -75,8 +75,11 @@ When the user wants to generate images, choose the appropriate tool based on the
 3. Use 'turbo' for faster results on versions that support it; V8.1 does not support Turbo
 4. Use 'relax' for slower, cheaper generation
 
+## Midjourney V8.2 Features:
+- **V8.2 is the latest model** - use `version='8.2'` for the newest capabilities
+- **Quality and modes**: Quality controls and fast, relax, or Turbo modes are supported.
+
 ## Midjourney V8.1 Features:
-- **V8.1 is the latest model** - use `version='8.1'` for the newest capabilities
 - **Resolution**: Standard (`hd=False`) and HD 2K (`hd=True`) use separate resolution-based rates.
 - **Quality is unsupported**: Do not use `quality` / `--q` with V8.1.
 - **Modes**: Use `fast` or `relax`; Turbo is not supported in V8.1.
@@ -134,7 +137,8 @@ def midjourney_workflow_examples() -> str:
 - Use aspect ratio parameter (--ar) for specific dimensions
 - Use --no parameter to exclude unwanted elements
 - For Chinese speakers, offer translation with `midjourney_translate`
-- For V8.1: use `version='8.1'` and consider `hd=True` for 2K; do not set `quality` or use Turbo
+- Prefer V8.2 for new generations; it supports quality controls and Turbo
+- For V8.1: consider `hd=True` for 2K; do not set `quality` or use Turbo
 - V8.1 style references and moodboards use the selected SD/HD resolution rate
 """
 
