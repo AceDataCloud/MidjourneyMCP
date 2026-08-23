@@ -51,7 +51,7 @@ Generate AI images, videos, and manage creative projects directly from Claude, V
 ### 1. Get Your API Token
 
 1. Sign up at [AceDataCloud Platform](https://platform.acedata.cloud)
-2. Go to the [API documentation page](https://platform.acedata.cloud/documents/e52c028d-897a-4d51-b110-60fccbe6118d)
+2. Go to the [API documentation page](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461)
 3. Click **"Acquire"** to get your API token
 4. Copy the token for use below
 
@@ -536,12 +536,12 @@ MidjourneyMCP/
 
 This server wraps the [AceDataCloud Midjourney API](https://platform.acedata.cloud):
 
-- [Midjourney Imagine API](https://platform.acedata.cloud/documents/e52c028d-897a-4d51-b110-60fccbe6118d) - Image generation
-- [Midjourney Describe API](https://platform.acedata.cloud/documents/870e973b-712a-4686-ab8b-beae27f129ce) - Image description
-- [Midjourney Tasks API](https://platform.acedata.cloud/documents/58ea7cc1-c685-40c3-a619-f29f9ac5d8f4) - Task queries
+- [Midjourney Imagine API](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461) - Image generation
+- [Midjourney Describe API](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461) - Image description
+- [Midjourney Tasks API](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461) - Task queries
 - [Midjourney Edits API](https://platform.acedata.cloud/documents/midjourney-edits) - Image editing
 - [Midjourney Videos API](https://platform.acedata.cloud/documents/midjourney-videos) - Video generation
-- [Midjourney Translate API](https://platform.acedata.cloud/documents/e067d19b-7a66-4458-a45f-0fe88c1d5d34) - Translation
+- [Midjourney Translate API](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461) - Translation
 
 ## Contributing
 
@@ -552,6 +552,11 @@ Contributions are welcome! Please:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing`)
 5. Open a Pull Request
+
+## Service details
+
+<!-- canonical-documentation -->
+[Service details](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461)
 
 ## License
 

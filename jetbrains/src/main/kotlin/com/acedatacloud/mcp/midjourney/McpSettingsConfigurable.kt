@@ -85,7 +85,7 @@ class McpSettingsConfigurable : Configurable {
                     browserLink("Ace Data Cloud Platform", "https://platform.acedata.cloud")
                 }
                 row {
-                    browserLink("API Documentation", "https://docs.acedata.cloud")
+                    browserLink("Service details", "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461")
                 }
                 row {
                     browserLink("Source Code", "https://github.com/AceDataCloud/MidjourneyMCP")

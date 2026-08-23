@@ -63,7 +63,7 @@ You can rotate or remove the API key any time from the command palette:
 
 ## Pricing
 
-From $0.04 per /imagine job. Free trial credit on sign-up. See full pricing at [https://docs.acedata.cloud](https://docs.acedata.cloud).
+From $0.04 per /imagine job. Free trial credit on sign-up. See service details at [https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461).
 
 ---
 
@@ -135,7 +135,7 @@ version, install [`uv`](https://docs.astral.sh/uv/) and use:
 - **PyPI package:** [`mcp-midjourney`](https://pypi.org/project/mcp-midjourney/)
 - **Source repository:** https://github.com/AceDataCloud/MidjourneyMCP
 - **Ace Data Cloud platform:** https://platform.acedata.cloud
-- **MCP documentation:** https://docs.acedata.cloud
+- **Service details:** https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461
 
 ## License
 
