@@ -18,6 +18,7 @@ load_dotenv()
 
 from core.config import settings
 from core.server import mcp
+from core.server_card import registered_tool_cards
 
 # Configure logging
 logging.basicConfig(
@@ -180,63 +181,7 @@ Environment Variables:
                         ],
                         "websiteUrl": "https://github.com/AceDataCloud/MidjourneyMCP",
                         "authentication": {"required": True, "schemes": ["bearer"]},
-                        "tools": [
-                            {
-                                "name": "midjourney_imagine",
-                                "description": "Generate images from text prompts",
-                            },
-                            {
-                                "name": "midjourney_transform",
-                                "description": "Transform/upscale/vary existing images",
-                            },
-                            {
-                                "name": "midjourney_blend",
-                                "description": "Blend multiple images together",
-                            },
-                            {
-                                "name": "midjourney_with_reference",
-                                "description": "Generate with image references",
-                            },
-                            {
-                                "name": "midjourney_describe",
-                                "description": "Describe an image in text",
-                            },
-                            {
-                                "name": "midjourney_edit",
-                                "description": "Edit images with inpainting",
-                            },
-                            {
-                                "name": "midjourney_generate_video",
-                                "description": "Generate video from image",
-                            },
-                            {"name": "midjourney_extend_video", "description": "Extend a video"},
-                            {"name": "midjourney_translate", "description": "Translate prompts"},
-                            {
-                                "name": "midjourney_shorten",
-                                "description": "Shorten and analyze a prompt",
-                            },
-                            {
-                                "name": "midjourney_get_seed",
-                                "description": "Get the seed value of a generated image",
-                            },
-                            {"name": "midjourney_get_task", "description": "Query task status"},
-                            {
-                                "name": "midjourney_get_tasks_batch",
-                                "description": "Query multiple tasks",
-                            },
-                            {
-                                "name": "midjourney_list_actions",
-                                "description": "List available actions",
-                            },
-                            {
-                                "name": "midjourney_get_prompt_guide",
-                                "description": "Get prompt writing guide",
-                            },
-                            {
-                                "name": "midjourney_list_transform_actions",
-                                "description": "List transform actions",
-                            },
-                        ],
+                        "tools": registered_tool_cards(mcp),
                         "prompts": [
                             {
                                 "name": "midjourney_image_generation_guide",
