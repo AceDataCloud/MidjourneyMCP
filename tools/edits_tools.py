@@ -44,6 +44,10 @@ async def midjourney_edit(
             description="Webhook callback URL for asynchronous notifications. When provided, the API will call this URL when the edit is complete."
         ),
     ] = None,
+    async_: Annotated[
+        bool | None,
+        Field(alias="async", description="Whether to process the request asynchronously."),
+    ] = None,
 ) -> str:
     """Edit an existing image using Midjourney.
 
@@ -71,6 +75,8 @@ async def midjourney_edit(
         "split_images": split_images,
         "callback_url": callback_url,
     }
+    if async_ is not None:
+        payload["async"] = async_
 
     if mask:
         payload["mask"] = mask

@@ -76,6 +76,18 @@ async def midjourney_imagine(
             description="Whether the prompt uses a moodboard. V8.1 bills it at the selected SD/HD resolution rate; V8.0 Alpha uses different premium rules."
         ),
     ] = False,
+    image_id: Annotated[
+        str | None,
+        Field(description="Optional image ID for image-based generation actions."),
+    ] = None,
+    mask: Annotated[
+        str | None,
+        Field(description="Optional Base64-encoded mask image for image-based generation actions."),
+    ] = None,
+    async_: Annotated[
+        bool | None,
+        Field(alias="async", description="Whether to process the request asynchronously."),
+    ] = None,
 ) -> str:
     """Generate AI images from a text prompt using Midjourney.
 
@@ -113,6 +125,12 @@ async def midjourney_imagine(
         payload["style_reference"] = style_reference
     if moodboard:
         payload["moodboard"] = moodboard
+    if image_id is not None:
+        payload["image_id"] = image_id
+    if mask is not None:
+        payload["mask"] = mask
+    if async_ is not None:
+        payload["async"] = async_
 
     result = await client.imagine(**payload)
     return format_imagine_result(result)

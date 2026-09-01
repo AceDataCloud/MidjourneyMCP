@@ -50,6 +50,10 @@ async def midjourney_generate_video(
             description="Webhook callback URL for asynchronous notifications. When provided, the API will call this URL when the video is generated."
         ),
     ] = None,
+    async_: Annotated[
+        bool | None,
+        Field(alias="async", description="Whether to process the request asynchronously."),
+    ] = None,
 ) -> str:
     """Generate a video from a reference image using Midjourney.
 
@@ -80,6 +84,8 @@ async def midjourney_generate_video(
 
     if end_image_url:
         payload["end_image_url"] = end_image_url
+    if async_ is not None:
+        payload["async"] = async_
 
     result = await client.generate_video(**payload)
     return format_video_result(result)
@@ -125,6 +131,10 @@ async def midjourney_extend_video(
             description="Webhook callback URL for asynchronous notifications. When provided, the API will call this URL when the video extension is complete."
         ),
     ] = None,
+    async_: Annotated[
+        bool | None,
+        Field(alias="async", description="Whether to process the request asynchronously."),
+    ] = None,
 ) -> str:
     """Extend an existing Midjourney video to make it longer.
 
@@ -152,6 +162,8 @@ async def midjourney_extend_video(
         payload["resolution"] = resolution
     if end_image_url:
         payload["end_image_url"] = end_image_url
+    if async_ is not None:
+        payload["async"] = async_
 
     result = await client.generate_video(**payload)
     return format_video_result(result)
