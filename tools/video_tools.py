@@ -52,7 +52,9 @@ async def midjourney_generate_video(
     ] = None,
     async_: Annotated[
         bool | None,
-        Field(alias="async", description="Whether to process the request asynchronously."),
+        Field(
+            validation_alias="async", description="Whether to process the request asynchronously."
+        ),
     ] = None,
 ) -> str:
     """Generate a video from a reference image using Midjourney.
@@ -133,7 +135,9 @@ async def midjourney_extend_video(
     ] = None,
     async_: Annotated[
         bool | None,
-        Field(alias="async", description="Whether to process the request asynchronously."),
+        Field(
+            validation_alias="async", description="Whether to process the request asynchronously."
+        ),
     ] = None,
 ) -> str:
     """Extend an existing Midjourney video to make it longer.
