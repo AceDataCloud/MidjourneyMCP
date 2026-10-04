@@ -15,7 +15,7 @@ can call it directly from chat.
 ## Quick Start
 
 1. **Install this extension.** VS Code registers the `midjourney` MCP server automatically.
-2. **Get an API key** from [Ace Data Cloud](https://platform.acedata.cloud/console/applications) (Applications → API Key). New accounts include free trial credit.
+2. **Get an API key** from [Ace Data Cloud](https://platform.acedata.cloud/console/applications?utm_source=vscode_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_vscode_api_key) (Applications → API Key). New accounts include free trial credit.
 3. **Open Copilot Chat** in agent mode and ask for a image task — the extension prompts for the API key the first time and stores it in the OS keychain via VS Code's `SecretStorage`.
 
 You can rotate or remove the API key any time from the command palette:
@@ -63,7 +63,7 @@ You can rotate or remove the API key any time from the command palette:
 
 ## Pricing
 
-From $0.04 per /imagine job. Free trial credit on sign-up. See service details at [https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461).
+From $0.04 per /imagine job. Free trial credit on sign-up. See service details at [https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=vscode_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_vscode_quick_start).
 
 ---
 
@@ -134,8 +134,8 @@ version, install [`uv`](https://docs.astral.sh/uv/) and use:
 - **Hosted endpoint:** https://midjourney.mcp.acedata.cloud/mcp
 - **PyPI package:** [`mcp-midjourney`](https://pypi.org/project/mcp-midjourney/)
 - **Source repository:** https://github.com/AceDataCloud/MidjourneyMCP
-- **Ace Data Cloud platform:** https://platform.acedata.cloud
-- **Service details:** https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461
+- **Ace Data Cloud platform:** https://platform.acedata.cloud?utm_source=vscode_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_vscode_platform
+- **Service details:** https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=vscode_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_vscode_quick_start
 
 ## License
 

@@ -5,7 +5,7 @@ AI Image Generation with [Midjourney](https://midjourney.com) via [Model Context
 <!-- Plugin description -->
 This plugin helps you set up the MCP Midjourney server with JetBrains AI Assistant.
 Once configured, AI Assistant can create, edit, blend and transform images
-— all powered by [Ace Data Cloud](https://platform.acedata.cloud).
+— all powered by [Ace Data Cloud](https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_platform).
 
 **15 AI Tools** — Create, edit, blend and transform images.
 <!-- Plugin description end -->
@@ -14,7 +14,7 @@ Once configured, AI Assistant can create, edit, blend and transform images
 
 1. Install this plugin from the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/com.acedatacloud.mcp.midjourney)
 2. Open **Settings → Tools → Midjourney MCP**
-3. Enter your [Ace Data Cloud](https://platform.acedata.cloud) API token
+3. Enter your [Ace Data Cloud](https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_platform) API token
 4. Click **Copy Config** (STDIO or HTTP)
 5. Paste into **Settings → Tools → AI Assistant → Model Context Protocol (MCP)**
 
@@ -55,8 +55,8 @@ Connects to the hosted MCP server at `midjourney.mcp.acedata.cloud`. No local in
 
 ## Links
 
-- [Ace Data Cloud Platform](https://platform.acedata.cloud)
-- [Service details](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461)
+- [Ace Data Cloud Platform](https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_platform)
+- [Service details](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_quick_start)
 - [PyPI Package](https://pypi.org/project/mcp-midjourney/)
 - [Source Code](https://github.com/AceDataCloud/MidjourneyMCP)
 
