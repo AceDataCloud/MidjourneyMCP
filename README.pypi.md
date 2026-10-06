@@ -47,121 +47,59 @@ Generate AI images, videos, and manage creative projects directly from Claude, V
 | `midjourney_get_prompt_guide` | Get guidance on writing effective prompts for Midjourney. |
 | `midjourney_list_transform_actions` | List all available transformation actions for Midjourney images. |
 
-## Quick Start
+## Connect: hosted OAuth, API token, or local stdio
 
-### 1. Get Your API Token
+The hosted endpoint is `https://midjourney.mcp.acedata.cloud/mcp`. Choose one route for the MCP client:
 
-1. Sign up at [AceDataCloud Platform](https://platform.acedata.cloud?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_platform)
-2. Go to the [API documentation page](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_quick_start)
-3. Click **"Acquire"** to get your API token
-4. Copy the token for use below
+| Route | When to use it | Credential setup |
+|---|---|---|
+| Hosted OAuth | The client supports remote MCP OAuth | Add only the URL, then sign in to AceDataCloud and approve access. No token needs to be pasted into client configuration. |
+| Hosted API token | The client cannot finish OAuth, or you need an explicit integration credential | Send an AceDataCloud API token in the `Authorization: Bearer …` header. Keep it in a local secret store or environment variable. |
+| Local stdio | The client runs a local MCP process | Install `mcp-midjourney` and pass `ACEDATACLOUD_API_TOKEN` to that process. It still calls the AceDataCloud API. |
 
-### 2. Use the Hosted Server (Recommended)
+The hosted service advertises OAuth metadata and Dynamic Client Registration (DCR). **DCR registers the client application; it is not an API key.** OAuth signs you in and the client sends the resulting Bearer token; it may reuse or create an API credential for the account. Browser sign-in still requires an AceDataCloud account. The hosted service can be metered: review [current service documentation](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_quick_start) and displayed pricing before a real operation. Do not configure both an OAuth login and a fixed `Authorization` header for the same server.
 
-AceDataCloud hosts a managed MCP server — **no local installation required**.
+### Hosted OAuth examples
 
-**Endpoint:** `https://midjourney.mcp.acedata.cloud/mcp`
+- **Claude and Claude Desktop chat:** Add a remote custom connector in `Customize → Connectors → Add custom connector`, enter `https://midjourney.mcp.acedata.cloud/mcp`, select sign-in, and choose **Register automatically** if Claude asks how to register its OAuth client. Complete consent. Claude Desktop's local `claude_desktop_config.json` is a separate setup. [Claude connector guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+- **Claude Code:** `claude mcp add --transport http --scope user midjourney https://midjourney.mcp.acedata.cloud/mcp`, then `claude mcp login midjourney`. Check `/mcp`. [Claude Code MCP guide](https://code.claude.com/docs/en/mcp).
+- **Cursor:** Add a remote server with only `https://midjourney.mcp.acedata.cloud/mcp`. For a project, merge the entry below into `<project>/.cursor/mcp.json`; for personal use, use `~/.cursor/mcp.json`. [Cursor MCP guide](https://cursor.com/docs/mcp).
+- **VS Code / Copilot:** Run **MCP: Add Server**, select HTTP, enter `https://midjourney.mcp.acedata.cloud/mcp`, then finish the browser sign-in. New portable workspace configs use `<project>/.mcp.json`; the VS Code-specific format below uses `<project>/.vscode/mcp.json` or the user profile. Check **MCP: List Servers**. [VS Code MCP setup](https://code.visualstudio.com/docs/agent-customization/mcp-servers).
+- **Codex:** `codex mcp add midjourney --url https://midjourney.mcp.acedata.cloud/mcp`, then `codex mcp login midjourney`. Its user settings are in `~/.codex/config.toml`. [Official Codex MCP guide](https://developers.openai.com/codex/mcp/).
 
-All requests require a Bearer token. Use the API token from Step 1.
-
-#### Claude.ai
-
-Connect directly on [Claude.ai](https://claude.ai) with OAuth — **no API token needed**:
-
-1. Go to Claude.ai **Settings → Integrations → Add More**
-2. Enter the server URL: `https://midjourney.mcp.acedata.cloud/mcp`
-3. Complete the OAuth login flow
-4. Start using the tools in your conversation
-
-#### Claude Desktop
-
-Add to your config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+Cursor project config (OAuth):
 
 ```json
 {
   "mcpServers": {
-    "midjourney": {
-      "type": "streamable-http",
-      "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
+    "midjourney": {"url": "https://midjourney.mcp.acedata.cloud/mcp"}
   }
 }
 ```
 
-#### Cursor / Windsurf
-
-Add to your MCP config (`.cursor/mcp.json` or `.windsurf/mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "midjourney": {
-      "type": "streamable-http",
-      "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
-  }
-}
-```
-
-#### VS Code (Copilot)
-
-Run **MCP: Open User Configuration** from the command palette and merge this entry into `servers`, preserving existing settings. This applies to the current VS Code Profile. Replace `YOUR_API_TOKEN` locally; keep this token-bearing file private and out of version control.
+VS Code-specific workspace config (OAuth):
 
 ```json
 {
   "servers": {
-    "midjourney": {
-      "type": "http",
-      "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
+    "midjourney": {"type": "http", "url": "https://midjourney.mcp.acedata.cloud/mcp"}
   }
 }
 ```
 
-Run **MCP: List Servers**, select and start the server, review the trust prompt, and confirm tools are loaded in Agent mode.
+### Hosted API token
 
-Or install the [Ace Data Cloud MCP extension](https://marketplace.visualstudio.com/items?itemName=acedatacloud.acedatacloud-mcp) for VS Code, which registers the hosted MCP servers with one-click setup.
+Sign in at [AceDataCloud Platform](https://platform.acedata.cloud?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_platform), open the [service page](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_quick_start), and obtain an API credential. A fixed Bearer header is useful when your client lacks OAuth; an invalid header does not fall back to OAuth in Claude Code. The header value is sensitive, so keep it out of committed files and screenshots.
 
-#### JetBrains IDEs
-
-1. Go to **Settings → Tools → AI Assistant → Model Context Protocol (MCP)**
-2. Click **Add** → **HTTP**
-3. Paste:
-
-```json
-{
-  "mcpServers": {
-    "midjourney": {
-      "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
-  }
-}
-```
-
-
-#### Claude Code
-
-Set the API token in the terminal that will launch Claude Code:
+For Claude Code, the shell expands the token when you add the server; treat the saved user MCP config as a secret:
 
 ```bash
 export ACEDATACLOUD_API_TOKEN='YOUR_API_TOKEN'
-claude mcp add midjourney --scope user --transport http https://midjourney.mcp.acedata.cloud/mcp \
-  --header 'Authorization: Bearer ${ACEDATACLOUD_API_TOKEN}'
+claude mcp add --transport http --scope user midjourney https://midjourney.mcp.acedata.cloud/mcp \
+  --header "Authorization: Bearer $ACEDATACLOUD_API_TOKEN"
 ```
 
-For a project instead, merge this entry into the root `.mcp.json`, preserving existing settings:
+For a Claude Code project config, put a variable reference in `<project>/.mcp.json` and set that variable in the environment that launches Claude Code:
 
 ```json
 {
@@ -169,141 +107,55 @@ For a project instead, merge this entry into the root `.mcp.json`, preserving ex
     "midjourney": {
       "type": "http",
       "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer ${ACEDATACLOUD_API_TOKEN}"
-      }
+      "headers": {"Authorization": "Bearer ${ACEDATACLOUD_API_TOKEN}"}
     }
   }
 }
 ```
 
-On Windows PowerShell, set `$env:ACEDATACLOUD_API_TOKEN = 'YOUR_API_TOKEN'` instead of `export`. Start `claude` from that same terminal; new terminals and desktop launches must also have access to the variable. Run `/mcp` in the session to confirm connection and loaded tools, and review the approval prompt for project servers. Never commit a real token.
-
-#### Cline
-
-Open **MCP Servers → Configure → Configure MCP Servers** in Cline, or edit `~/.cline/mcp.json` for Cline CLI. Merge this entry into `mcpServers`, preserving existing settings. Replace `YOUR_API_TOKEN` locally; this user configuration contains the token, so do not commit or share it.
+Cursor uses a different environment-variable syntax in `~/.cursor/mcp.json` or an uncommitted project config:
 
 ```json
 {
   "mcpServers": {
     "midjourney": {
-      "type": "streamableHttp",
       "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      },
-      "disabled": false,
-      "autoApprove": []
+      "headers": {"Authorization": "Bearer ${env:ACEDATACLOUD_API_TOKEN}"}
     }
   }
 }
 ```
 
-Keep `autoApprove` empty, confirm the server is connected and tools are loaded, and review permissions on the first tool call.
-
-#### Amazon Q Developer
-
-Add to your MCP configuration:
+In VS Code, run **MCP: Open User Configuration** and merge this server plus its masked input; `${input:...}` is for VS Code's user/workspace format and is not portable to the Agent Host `.mcp.json` format:
 
 ```json
 {
-  "mcpServers": {
+  "inputs": [
+    {"id": "acedata-midjourney-token", "type": "promptString", "description": "AceDataCloud API token", "password": true}
+  ],
+  "servers": {
     "midjourney": {
-      "type": "streamable-http",
+      "type": "http",
       "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
+      "headers": {"Authorization": "Bearer ${input:acedata-midjourney-token}"}
     }
   }
 }
 ```
 
-#### Roo Code
+For **Cline**, use its MCP configuration UI or CLI file `~/.cline/data/settings/cline_mcp_settings.json`; its remote transport value is `streamableHttp`. For **JetBrains AI Assistant**, add a remote URL from **Settings → Tools → AI Assistant → Model Context Protocol (MCP)**. For **Zed**, use a `context_servers` entry with the URL only for OAuth or add a local Bearer header. These clients have different configuration schemas; follow their current UI rather than copying another client's JSON. [Cline](https://docs.cline.bot/mcp/mcp-overview) · [JetBrains](https://www.jetbrains.com/help/ai-assistant/mcp.html) · [Zed](https://zed.dev/docs/ai/mcp).
 
-Add to Roo Code MCP settings:
+### Local stdio
 
-```json
-{
-  "mcpServers": {
-    "midjourney": {
-      "type": "streamable-http",
-      "url": "https://midjourney.mcp.acedata.cloud/mcp",
-      "headers": {
-        "Authorization": "Bearer YOUR_API_TOKEN"
-      }
-    }
-  }
-}
-```
-
-#### Continue.dev
-
-Add to `.continue/config.yaml`:
-
-```yaml
-mcpServers:
-  - name: midjourney
-    type: streamable-http
-    url: https://midjourney.mcp.acedata.cloud/mcp
-    headers:
-      Authorization: "Bearer YOUR_API_TOKEN"
-```
-
-#### Zed
-
-Add to Zed's settings (`~/.config/zed/settings.json`):
-
-```json
-{
-  "language_models": {
-    "mcp_servers": {
-      "midjourney": {
-        "url": "https://midjourney.mcp.acedata.cloud/mcp",
-        "headers": {
-          "Authorization": "Bearer YOUR_API_TOKEN"
-        }
-      }
-    }
-  }
-}
-```
-
-#### cURL Test
+Install the package and give the local process an API token:
 
 ```bash
-# Health check (no auth required)
-curl https://midjourney.mcp.acedata.cloud/health
-
-# MCP initialize
-curl -X POST https://midjourney.mcp.acedata.cloud/mcp \
-  -H "Content-Type: application/json" \
-  -H "Accept: application/json" \
-  -H "Authorization: Bearer YOUR_API_TOKEN" \
-  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}'
-```
-
-### 3. Or Run Locally (Alternative)
-
-If you prefer to run the server on your own machine:
-
-```bash
-# Install from PyPI
-pip install mcp-midjourney
-# or
-uvx mcp-midjourney
-
-# Set your API token
-export ACEDATACLOUD_API_TOKEN="your_token_here"
-
-# Run (stdio mode for Claude Desktop / local clients)
+python -m pip install mcp-midjourney
+export ACEDATACLOUD_API_TOKEN='YOUR_API_TOKEN'
 mcp-midjourney
-
-# Run (HTTP mode for remote access)
-mcp-midjourney --transport http --port 8000
 ```
 
-#### Claude Desktop (Local)
+For Claude Desktop local MCP, merge this entry into the file opened by its developer settings (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS). `uvx` requires [uv](https://docs.astral.sh/uv/) on `PATH`:
 
 ```json
 {
@@ -311,22 +163,21 @@ mcp-midjourney --transport http --port 8000
     "midjourney": {
       "command": "uvx",
       "args": ["mcp-midjourney"],
-      "env": {
-        "ACEDATACLOUD_API_TOKEN": "your_token_here"
-      }
+      "env": {"ACEDATACLOUD_API_TOKEN": "YOUR_API_TOKEN"}
     }
   }
 }
 ```
 
-#### Docker (Self-Hosting)
+Keep this user-level file private. Self-hosted HTTP uses `mcp-midjourney --transport http --port 8000`; expose it only with suitable network and TLS controls. Local execution still calls the AceDataCloud API.
 
-```bash
-docker pull ghcr.io/acedatacloud/mcp-midjourney:latest
-docker run -p 8000:8000 ghcr.io/acedatacloud/mcp-midjourney:latest
-```
+### Check before using the service
 
-Clients connect with their own Bearer token — the server extracts the token from each request's `Authorization` header.
+1. `https://midjourney.mcp.acedata.cloud/health` returning `{"status":"ok"}` checks endpoint reachability only.
+2. Confirm that the MCP client loads tools. `midjourney_list_actions` is a reference tool; it does not verify downstream API access or balance.
+3. If you need a full API check, call `midjourney_generate_video` with your own valid input after reviewing [current service documentation](https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_quick_start) and displayed pricing. If the result contains a task ID, call `midjourney_get_task` on that same ID until terminal success or failure. Do not resubmit the operation just to check progress.
+
+For **401**, check which auth route the client used and whether the token or OAuth session is valid. A **403** may mean an account permission or content moderation failure; read the returned error. Insufficient balance and downstream service failures need their own diagnosis. A listed tool or submitted task does not prove a successful result.
 
 ## Available Tools
 
