@@ -23,11 +23,19 @@ class McpSettingsConfigurable : Configurable {
 
         myPanel = panel {
             group("API Configuration") {
+                // BEGIN TOKEN ONBOARDING
+                row {
+                    browserLink("Get an API key", "https://platform.acedata.cloud/console/applications?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_api_key")
+                }
+                row {
+                    comment("Sign in, initialize General Application if needed, then copy an API key.")
+                }
+                // END TOKEN ONBOARDING
                 row("API Token:") {
                     passwordField()
                         .bindText(::apiToken)
                         .align(AlignX.FILL)
-                        .comment("Get your token at <a href=\"https://platform.acedata.cloud\">platform.acedata.cloud</a>")
+                        .comment("Paste the raw token without Bearer. Click Apply before copying a configuration.")
                 }
             }
 
@@ -82,10 +90,10 @@ class McpSettingsConfigurable : Configurable {
 
             group("Links") {
                 row {
-                    browserLink("Ace Data Cloud Platform", "https://platform.acedata.cloud")
+                    browserLink("Ace Data Cloud Platform", "https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_platform")
                 }
                 row {
-                    browserLink("Service details", "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461")
+                    browserLink("Service details", "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_quick_start")
                 }
                 row {
                     browserLink("Source Code", "https://github.com/AceDataCloud/MidjourneyMCP")
