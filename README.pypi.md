@@ -47,6 +47,14 @@ Generate AI images, videos, and manage creative projects directly from Claude, V
 | `midjourney_get_prompt_guide` | Get guidance on writing effective prompts for Midjourney. |
 | `midjourney_list_transform_actions` | List all available transformation actions for Midjourney images. |
 
+## Verify the connection before generating
+
+After installation, discover the server's tools and call `midjourney_list_actions` with no arguments. This reference tool returns locally defined model or action information without calling a generation API. It does **not** validate your application key, account balance, service access, or current price. Your client's Chat model can still create separate charges.
+
+To check authenticated access without creating media, query a task already owned by your application using the task-lookup tool and the **same original task ID**. If you have no existing task, stop after discovery/reference output; do not generate media just to test installation. Review [current pricing](https://platform.acedata.cloud/models?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_models) before any new generation.
+
+For missing tools, reconnect and refresh the tool list. For 401/403, check the existing application's key, service permissions, Allowed APIs, expiration and usage limit before replacing credentials. Keep a task/trace ID for other failures, never your key; do not automatically retry a paid operation.
+
 ## Connect: hosted OAuth, API token, or local stdio
 
 The hosted endpoint is `https://midjourney.mcp.acedata.cloud/mcp`. Choose one route for the MCP client:
