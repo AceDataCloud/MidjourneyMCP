@@ -25,7 +25,7 @@ class McpSettingsConfigurable : Configurable {
             group("API Configuration") {
                 // BEGIN TOKEN ONBOARDING
                 row {
-                    browserLink("Get an API key", "https://platform.acedata.cloud/console/applications?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_api_key")
+                    browserLink("Get an API key", "https://platform.acedata.cloud/console/applications?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen")
                 }
                 row {
                     comment("Sign in, initialize General Application if needed, then copy an API key.")
@@ -90,10 +90,10 @@ class McpSettingsConfigurable : Configurable {
 
             group("Links") {
                 row {
-                    browserLink("Ace Data Cloud Platform", "https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_platform")
+                    browserLink("Ace Data Cloud Platform", "https://platform.acedata.cloud?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen")
                 }
                 row {
-                    browserLink("Service details", "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_jetbrains_quick_start")
+                    browserLink("Service details", "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=jetbrains_marketplace&utm_medium=referral&utm_campaign=evergreen")
                 }
                 row {
                     browserLink("Source Code", "https://github.com/AceDataCloud/MidjourneyMCP")

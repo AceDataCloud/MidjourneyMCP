@@ -71,7 +71,7 @@ mcp-midjourney = "main:main"
 
 [project.urls]
 Homepage = "https://github.com/AceDataCloud/MidjourneyMCP"
-Documentation = "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen&utm_content=midjourney_mcp_package_quick_start"
+Documentation = "https://platform.acedata.cloud/services/d87e5e99-b797-4ade-9e73-b896896b0461?utm_source=pypi&utm_medium=referral&utm_campaign=evergreen"
 Repository = "https://github.com/AceDataCloud/MidjourneyMCP"
 Issues = "https://github.com/AceDataCloud/MidjourneyMCP/issues"
 Changelog = "https://github.com/AceDataCloud/MidjourneyMCP/blob/main/CHANGELOG.md"
